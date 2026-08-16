@@ -158,6 +158,18 @@
     color:var(--gold-soft);
   }
 
+  .event-date-line{
+    margin:1.6rem 0 0;
+    font-family:var(--ff-accent);
+    font-style:italic;
+    font-weight:500;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+    font-size:.95rem;
+    color:var(--ivory-soft);
+  }
+  .event-date-line .dot{ color:var(--gold); margin:0 .3em; font-style:normal; }
+
   /* ============ SPREAD / SPLIT COLUMNS ============ */
   #spread{ background:var(--ink); }
 
@@ -335,7 +347,7 @@
 
   .rsvp-btn{
     display:inline-block;
-    margin-top:2.6rem;
+    margin-top:1.8rem;
     padding:1.05rem 3.2rem;
     font-family:var(--ff-body);
     font-weight:500;
@@ -431,6 +443,7 @@
     #rsvp-section{ padding:12vh 1.1rem 7vh; }
     #rsvp-section h2{ font-size:clamp(1.7rem, 9vw, 2.4rem); }
     .rsvp-btn{ padding:.9rem 2.1rem; letter-spacing:.16em; font-size:.74rem; }
+    .event-date-line{ font-size:.8rem; letter-spacing:.14em; }
     .map-block{ margin-top:3.4rem; }
     .map-frame-wrap{ padding:6px; }
     .map-frame-wrap iframe{ height:230px; }
@@ -456,6 +469,7 @@
     <p class="eyebrow reveal" style="--d:.05s">The Debut Issue · Vol. XVIII</p>
     <h1 id="head-2" class="reveal" style="--d:.2s">Gwyneth's <em>Debut</em> Feature.</h1>
     <div class="hairline reveal" style="--d:.35s"></div>
+    <p class="event-date-line reveal" style="--d:.45s">September 12, 2026 <span class="dot">·</span> 6:00 PM</p>
   </section>
 
   <!-- ============ SPREAD: three columns ============ -->
@@ -539,7 +553,10 @@
     <h2 class="reveal" style="--d:.1s">Join the Celebration</h2>
     <p class="sub reveal" style="--d:.2s">Your presence would mean the world on this milestone. Please confirm your attendance below.</p>
 
-    <a id="rsvp-btn" class="rsvp-btn reveal" style="--d:.35s"
+    <p class="event-date-line reveal" style="--d:.3s">September 12, 2026 <span class="dot">·</span> 6:00 PM</p>
+    <p class="sub reveal" style="--d:.3s">Ciara's Events Place — Fatima St. cor. San Rafael St., Plainview, Mandaluyong City</p>
+
+    <a id="rsvp-btn" class="rsvp-btn reveal" style="--d:.4s"
        href="https://docs.google.com/forms/d/e/1FAIpQLSeQmBP9RjGNv8WBy2dACYO2Jxyy-EH8xEvUB2yBk1hWPsb2YA/viewform"
        target="_blank" rel="noopener noreferrer">RSVP Now</a>
 

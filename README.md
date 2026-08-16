@@ -1,0 +1,2 @@
+# kima
+static web pages

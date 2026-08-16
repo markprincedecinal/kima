@@ -31,7 +31,7 @@
 
   *{ box-sizing:border-box; }
 
-  html{ scroll-behavior:smooth; }
+  html{ scroll-behavior:smooth; max-width:100%; overflow-x:hidden; }
 
   body{
     margin:0;
@@ -39,7 +39,10 @@
     color:var(--ivory);
     font-family:var(--ff-body);
     overflow-x:hidden;
+    max-width:100vw;
   }
+
+  img, iframe{ max-width:100%; }
 
   ::selection{ background:var(--gold); color:var(--ink); }
 
@@ -410,6 +413,27 @@
   @media (prefers-reduced-motion: reduce){
     *{ animation:none !important; transition:none !important; }
     .reveal, .story-block{ opacity:1 !important; transform:none !important; }
+  }
+
+  @media (max-width: 600px){
+    #hero{ padding:0 1.1rem; }
+    .eyebrow{ letter-spacing:.2em; font-size:.68rem; }
+    .hairline{ width:88px; }
+    #head-1{ font-size:clamp(2.5rem, 15vw, 4.2rem); }
+    #masthead{ padding:8vh 1.1rem 6vh; }
+    #head-2{ font-size:clamp(2rem, 9vw, 3rem); }
+    .col-pad{ padding:6vh 1.2rem; }
+    .story-block p{ font-size:.94rem; line-height:1.75; }
+    .story-block.dropcap p::first-letter{ font-size:2.5rem; }
+    .parallax-wrap{ height:44vh; }
+    .col2-copy{ padding:5vh 1.2rem 7vh; }
+    .col2-copy h2{ font-size:1.4rem; }
+    #rsvp-section{ padding:12vh 1.1rem 7vh; }
+    #rsvp-section h2{ font-size:clamp(1.7rem, 9vw, 2.4rem); }
+    .rsvp-btn{ padding:.9rem 2.1rem; letter-spacing:.16em; font-size:.74rem; }
+    .map-block{ margin-top:3.4rem; }
+    .map-frame-wrap{ padding:6px; }
+    .map-frame-wrap iframe{ height:230px; }
   }
 </style>
 </head>

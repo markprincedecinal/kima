@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>RSVP — Gwyneth's Debut</title>
+
+<!-- Bootstrap (CDN) -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Fonts (matches the main Debut Feature page) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;1,500;1,600&family=Jost:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,500;0,700;0,900;1,600&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --ink:#0b0b0c;
+    --ink-soft:#141416;
+    --ivory:#f6f1e9;
+    --ivory-soft:#eee7da;
+    --gold:#8ba38d;
+    --gold-soft:#aebfa0;
+    --rose:#c98ca0;
+    --rose-soft:#e3bcc7;
+    --line-on-dark:rgba(246,241,233,.18);
+    --line-on-light:rgba(11,11,12,.12);
+    --ff-display:'Playfair Display', serif;
+    --ff-body:'Jost', sans-serif;
+    --ff-accent:'Cormorant Garamond', serif;
+  }
+
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; max-width:100%; overflow-x:hidden; }
+
+  body{
+    margin:0;
+    background:var(--ink);
+    color:var(--ivory);
+    font-family:var(--ff-body);
+    overflow-x:hidden;
+    max-width:100vw;
+  }
+
+  ::selection{ background:var(--rose); color:var(--ink); }
+  a{ color:inherit; }
+
+  .eyebrow{
+    font-family:var(--ff-accent);
+    font-style:italic;
+    font-weight:500;
+    letter-spacing:.35em;
+    text-transform:uppercase;
+    font-size:.78rem;
+    color:var(--gold-soft);
+  }
+
+  .hairline{
+    width:110px;
+    height:2px;
+    background:linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin:1.6rem auto;
+  }
+
+  .reveal{
+    opacity:0;
+    transform:translateY(30px);
+    transition:opacity .9s cubic-bezier(.22,1,.36,1), transform .9s cubic-bezier(.22,1,.36,1);
+    transition-delay:var(--d, 0s);
+  }
+  .reveal.in-view{ opacity:1; transform:translateY(0); }
+
+  /* ============ HERO ============ */
+  #hero{
+    min-height:78svh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:14vh 1.5rem 8vh;
+    background:
+      radial-gradient(ellipse at 50% 25%, rgba(139,163,141,.12), transparent 60%),
+      var(--ink);
+  }
+
+  .kicker{
+    font-family:var(--ff-body);
+    font-weight:500;
+    letter-spacing:.5em;
+    text-transform:uppercase;
+    font-size:.85rem;
+    color:var(--ivory-soft);
+    margin:0;
+  }
+
+  .debut-word{
+    font-family:var(--ff-display);
+    font-style:italic;
+    font-weight:600;
+    font-size:clamp(1.6rem, 3.4vw, 2.4rem);
+    color:var(--gold-soft);
+    margin:.5rem 0 0;
+  }
+
+  .rsvp-word{
+    font-family:var(--ff-display);
+    font-weight:900;
+    font-size:clamp(4.5rem, 16vw, 10rem);
+    line-height:.9;
+    letter-spacing:.02em;
+    margin:.2rem 0 0;
+    background:linear-gradient(180deg, var(--gold-soft), var(--gold));
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+  }
+
+  .hero-sub{
+    font-weight:300;
+    font-size:1.02rem;
+    line-height:1.85;
+    color:var(--ivory-soft);
+    max-width:460px;
+    margin:1.6rem auto 0;
+  }
+
+  /* ============ FORM SECTION ============ */
+  #form-section{
+    background:var(--ink);
+    padding:2vh 1.25rem 14vh;
+    display:flex;
+    justify-content:center;
+  }
+
+  .rsvp-card{
+    width:100%;
+    max-width:620px;
+    background:var(--ivory);
+    color:var(--ink);
+    border-radius:28px;
+    padding:clamp(1.8rem, 5vw, 3.4rem);
+    box-shadow:0 40px 80px -30px rgba(0,0,0,.55), 0 2px 0 rgba(255,255,255,.03) inset;
+  }
+
+  .card-title{
+    font-family:var(--ff-display);
+    font-style:italic;
+    font-weight:700;
+    font-size:clamp(1.7rem, 4vw, 2.3rem);
+    margin:.5rem 0 0;
+    text-align:center;
+    color:var(--ink);
+  }
+
+  .card-sub{
+    text-align:center;
+    font-size:.88rem;
+    color:rgba(11,11,12,.55);
+    margin:.6rem 0 0;
+  }
+  .card-sub .req{ color:var(--rose); font-weight:600; }
+
+  .card-eyebrow{ text-align:center; display:block; }
+
+  fieldset{ border:0; padding:0; margin:2.4rem 0 0; }
+
+  .section-label{
+    font-family:var(--ff-accent);
+    font-style:italic;
+    font-weight:600;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    font-size:.82rem;
+    color:var(--rose);
+    margin:0 0 1.1rem;
+    display:block;
+  }
+
+  .field{ margin-bottom:1.3rem; position:relative; }
+
+  .field label{
+    display:block;
+    font-weight:500;
+    font-size:.9rem;
+    letter-spacing:.02em;
+    color:var(--ink);
+    margin-bottom:.45rem;
+  }
+  .field label .req{ color:var(--rose); }
+
+  .input-wrap{ position:relative; }
+
+  .input-icon{
+    position:absolute;
+    left:1rem;
+    top:50%;
+    transform:translateY(-50%);
+    width:18px;
+    height:18px;
+    color:var(--rose);
+    pointer-events:none;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .input-icon svg{ width:100%; height:100%; }
+
+  .field input[type="text"],
+  .field input[type="tel"],
+  .field input[type="email"],
+  .field select{
+    width:100%;
+    font-family:var(--ff-body);
+    font-size:.98rem;
+    color:var(--ink);
+    background:#fff;
+    border:1.5px solid var(--line-on-light);
+    border-radius:12px;
+    padding:.85rem 1rem .85rem 2.6rem;
+    transition:border-color .25s ease, box-shadow .25s ease;
+    appearance:none;
+    -webkit-appearance:none;
+  }
+  .field select{ padding-right:2.4rem; cursor:pointer; }
+  .field select.select-icon-emoji{ padding-left:2.6rem; }
+
+  .select-caret{
+    position:absolute;
+    right:1rem;
+    top:50%;
+    transform:translateY(-50%);
+    width:10px; height:10px;
+    border-right:1.5px solid rgba(11,11,12,.4);
+    border-bottom:1.5px solid rgba(11,11,12,.4);
+    transform:translateY(-70%) rotate(45deg);
+    pointer-events:none;
+  }
+
+  .field input::placeholder{ color:rgba(11,11,12,.35); font-style:italic; }
+
+  .field input:focus,
+  .field select:focus{
+    outline:none;
+    border-color:var(--rose);
+    box-shadow:0 0 0 4px rgba(201,140,160,.15);
+  }
+
+  /* Attendance toggle */
+  .attend-row{
+    display:flex;
+    gap:.9rem;
+    flex-wrap:wrap;
+  }
+  .attend-btn{
+    flex:1 1 190px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:.5rem;
+    padding:1rem 1rem;
+    border-radius:14px;
+    border:1.5px solid var(--line-on-light);
+    background:#fff;
+    color:var(--ink);
+    font-family:var(--ff-body);
+    font-weight:500;
+    font-size:.95rem;
+    cursor:pointer;
+    transition:all .25s ease;
+  }
+  .attend-btn:hover{ border-color:var(--rose); }
+  .attend-btn.selected{
+    background:linear-gradient(135deg, var(--rose-soft), var(--rose));
+    border-color:var(--rose);
+    color:#fff;
+    box-shadow:0 10px 24px -10px rgba(201,140,160,.6);
+  }
+  .attend-btn .icon{ font-size:1.05rem; }
+
+  /* Message */
+  textarea{
+    width:100%;
+    min-height:120px;
+    font-family:var(--ff-body);
+    font-size:.96rem;
+    color:var(--ink);
+    background:#fff;
+    border:1.5px solid var(--line-on-light);
+    border-radius:14px;
+    padding:1rem 1.1rem;
+    resize:vertical;
+    transition:border-color .25s ease, box-shadow .25s ease;
+  }
+  textarea::placeholder{ color:rgba(11,11,12,.35); font-style:italic; }
+  textarea:focus{
+    outline:none;
+    border-color:var(--rose);
+    box-shadow:0 0 0 4px rgba(201,140,160,.15);
+  }
+
+  .char-count{
+    display:block;
+    text-align:right;
+    font-size:.78rem;
+    color:rgba(11,11,12,.45);
+    margin-top:.4rem;
+  }
+
+  /* Submit */
+  .submit-wrap{ margin-top:2.2rem; text-align:center; }
+
+  .submit-btn{
+    width:100%;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:.6rem;
+    padding:1.05rem 2rem;
+    font-family:var(--ff-body);
+    font-weight:500;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    font-size:.92rem;
+    color:#fff;
+    background:linear-gradient(135deg, var(--rose), #b3728a);
+    border:0;
+    border-radius:14px;
+    cursor:pointer;
+    box-shadow:0 16px 36px -14px rgba(201,140,160,.7);
+    transition:transform .3s ease, box-shadow .3s ease;
+  }
+  .submit-btn:hover{ transform:translateY(-2px); box-shadow:0 20px 42px -14px rgba(201,140,160,.8); }
+  .submit-btn:active{ transform:translateY(0); }
+
+  .privacy-note{
+    margin-top:1rem;
+    font-size:.8rem;
+    color:rgba(11,11,12,.5);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:.4rem;
+  }
+
+  .field-error{
+    display:none;
+    font-size:.78rem;
+    color:#b3435a;
+    margin-top:.4rem;
+  }
+  .field-error.show{ display:block; }
+  .attend-row.has-error .attend-btn{ border-color:#b3435a; }
+
+  .submit-error{
+    display:none;
+    margin-top:.9rem;
+    font-size:.85rem;
+    color:#b3435a;
+    text-align:center;
+  }
+  .submit-error.show{ display:block; }
+
+  .submit-btn:disabled{
+    opacity:.65;
+    cursor:not-allowed;
+    transform:none !important;
+  }
+
+  /* Success state */
+  .success-panel{
+    display:none;
+    text-align:center;
+    padding:2rem 0;
+  }
+  .success-panel.show{ display:block; }
+  .success-panel .check{
+    width:64px; height:64px;
+    margin:0 auto 1.1rem;
+    border-radius:50%;
+    background:linear-gradient(135deg, var(--rose-soft), var(--rose));
+    display:flex; align-items:center; justify-content:center;
+    color:#fff; font-size:1.8rem;
+  }
+  .success-panel h3{
+    font-family:var(--ff-display);
+    font-style:italic;
+    font-weight:700;
+    font-size:1.6rem;
+    margin:0 0 .6rem;
+  }
+  .success-panel p{
+    color:rgba(11,11,12,.6);
+    font-size:.96rem;
+    max-width:360px;
+    margin:0 auto;
+    line-height:1.7;
+  }
+
+  form.hidden{ display:none; }
+
+  /* ============ FOOTER ============ */
+  footer.credit-final{
+    text-align:center;
+    padding:0 1.5rem 6vh;
+    background:var(--ink);
+  }
+  footer.credit-final p{
+    font-family:var(--ff-accent);
+    font-style:italic;
+    font-weight:500;
+    font-size:1.15rem;
+    color:var(--ivory-soft);
+    max-width:420px;
+    margin:0 auto;
+    line-height:1.7;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation:none !important; transition:none !important; }
+    .reveal{ opacity:1 !important; transform:none !important; }
+  }
+
+  @media (max-width:600px){
+    #hero{ padding:11vh 1.1rem 6vh; min-height:70svh; }
+    .rsvp-card{ border-radius:22px; padding:1.6rem 1.2rem; }
+    .attend-row{ flex-direction:column; }
+    .attend-btn{ flex:1 1 auto; }
+  }
+</style>
+</head>
+<body>
+
+  <!-- ============ HERO ============ -->
+  <section id="hero">
+    <p class="kicker">Gwyneth's</p>
+    <p class="debut-word">Debut</p>
+    <h1 class="rsvp-word">RSVP</h1>
+    <p class="hero-sub">Your presence would mean the world to me on this special day. Please let me know if you can join.</p>
+  </section>
+
+  <!-- ============ FORM ============ -->
+  <section id="form-section">
+    <div class="rsvp-card reveal" style="--d:.1s">
+
+      <span class="eyebrow card-eyebrow">Kindly Respond</span>
+      <h2 class="card-title">Please Fill Out the Form</h2>
+      <p class="card-sub">All fields with <span class="req">*</span> are required.</p>
+
+      <form id="rsvp-form" novalidate>
+
+        <fieldset style="margin-top:2rem;">
+          <span class="section-label">Guest Information</span>
+
+          <div class="field">
+            <label for="fullName">Full Name<span class="req">*</span></label>
+            <div class="input-wrap">
+              <span class="input-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21a8 8 0 0 0-16 0"/><circle cx="12" cy="7" r="4"/></svg>
+              </span>
+              <input type="text" id="fullName" name="fullName" placeholder="e.g. Maria Santos" required>
+            </div>
+            <span class="field-error" data-error-for="fullName">Please enter your full name.</span>
+          </div>
+
+          <div class="field">
+            <label for="phone">Phone Number<span class="req">*</span></label>
+            <div class="input-wrap">
+              <span class="input-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              </span>
+              <input type="tel" id="phone" name="phone" placeholder="e.g. 0912 345 6789" required>
+            </div>
+            <span class="field-error" data-error-for="phone">Please enter a contact number.</span>
+          </div>
+
+          <div class="field">
+            <label for="email">Email <span style="font-weight:400; color:rgba(11,11,12,.5);">(optional)</span></label>
+            <div class="input-wrap">
+              <span class="input-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 6-10 7L2 6"/></svg>
+              </span>
+              <input type="email" id="email" name="email" placeholder="e.g. maria@email.com">
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="guests">👥 Number of Guests</label>
+            <div class="input-wrap">
+              <select id="guests" name="guests" class="select-icon-emoji">
+                <option value="" selected disabled>Please select</option>
+                <option value="1">1 Guest</option>
+                <option value="2">2 Guests</option>
+                <option value="3">3 Guests</option>
+                <option value="4">4 Guests</option>
+                <option value="5">5 Guests</option>
+              </select>
+              <span class="select-caret"></span>
+            </div>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <span class="section-label">Attendance</span>
+          <label style="display:block; margin-bottom:.8rem; font-weight:500; font-size:.9rem;">
+            Will you be attending?<span class="req">*</span>
+          </label>
+          <div class="attend-row" id="attendRow">
+            <button type="button" class="attend-btn" data-value="yes">
+              <span class="icon">✓</span> Yes, I will attend
+            </button>
+            <button type="button" class="attend-btn" data-value="no">
+              <span class="icon">✕</span> No, I can't make it
+            </button>
+          </div>
+          <span class="field-error" data-error-for="attendance">Please let us know if you'll be attending.</span>
+        </fieldset>
+
+        <fieldset>
+          <span class="section-label">Message</span>
+          <div class="field" style="margin-bottom:0;">
+            <label for="message">Any message for Kima? <span style="font-weight:400; color:rgba(11,11,12,.5);">(optional)</span></label>
+            <textarea id="message" name="message" maxlength="200" placeholder="Write your message here..."></textarea>
+            <span class="char-count"><span id="charCount">0</span>/200</span>
+          </div>
+        </fieldset>
+
+        <div class="submit-wrap">
+          <button type="submit" class="submit-btn" id="submitBtn">♡ Submit RSVP</button>
+          <p class="privacy-note">🔒 Your response is private and secure.</p>
+          <p class="submit-error" id="submitError"></p>
+        </div>
+      </form>
+
+      <div class="success-panel" id="successPanel">
+        <div class="check">✓</div>
+        <h3>Thank you!</h3>
+        <p>Your RSVP has been received. I'll miss having you there, but thank you so much for letting me know.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <footer class="credit-final">
+    <p>Thank you for celebrating this beautiful milestone with me!</p>
+  </footer>
+
+<script>
+(function(){
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var revealTargets = document.querySelectorAll('.reveal');
+  if(reduceMotion){
+    revealTargets.forEach(function(el){ el.classList.add('in-view'); });
+  } else {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){
+          entry.target.classList.add('in-view');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    revealTargets.forEach(function(el){ io.observe(el); });
+  }
+
+  /* Attendance toggle */
+  var attendRow = document.getElementById('attendRow');
+  var attendButtons = attendRow.querySelectorAll('.attend-btn');
+  var attendanceValue = '';
+  attendButtons.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      attendButtons.forEach(function(b){ b.classList.remove('selected'); });
+      btn.classList.add('selected');
+      attendanceValue = btn.getAttribute('data-value');
+      attendRow.classList.remove('has-error');
+      document.querySelector('[data-error-for="attendance"]').classList.remove('show');
+    });
+  });
+
+  /* Character counter */
+  var message = document.getElementById('message');
+  var charCount = document.getElementById('charCount');
+  message.addEventListener('input', function(){
+    charCount.textContent = message.value.length;
+  });
+
+  /* Submit RSVP to the Cloudflare Pages Function -> D1 */
+  var form = document.getElementById('rsvp-form');
+  var successPanel = document.getElementById('successPanel');
+  var submitBtn = document.getElementById('submitBtn');
+  var submitError = document.getElementById('submitError');
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    var valid = true;
+
+    var fullName = document.getElementById('fullName');
+    var phone = document.getElementById('phone');
+    var email = document.getElementById('email');
+    var guests = document.getElementById('guests');
+
+    toggleFieldError(fullName, fullName.value.trim() === '');
+    toggleFieldError(phone, phone.value.trim() === '');
+    if(fullName.value.trim() === '' || phone.value.trim() === '') valid = false;
+
+    if(attendanceValue === ''){
+      attendRow.classList.add('has-error');
+      document.querySelector('[data-error-for="attendance"]').classList.add('show');
+      valid = false;
+    }
+
+    if(!valid){
+      form.querySelector('.field-error.show, .attend-row.has-error')?.scrollIntoView({ behavior:'smooth', block:'center' });
+      return;
+    }
+
+    submitError.classList.remove('show');
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Sending…';
+
+    fetch('/api/rsvp', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        fullName: fullName.value.trim(),
+        phone: phone.value.trim(),
+        email: email.value.trim(),
+        guests: guests.value || null,
+        attendance: attendanceValue,
+        message: message.value.trim()
+      })
+    })
+    .then(function(res){
+      return res.json().then(function(data){ return { ok: res.ok, data: data }; });
+    })
+    .then(function(result){
+      if(!result.ok){
+        throw new Error(result.data && result.data.error ? result.data.error : 'Something went wrong.');
+      }
+      if(result.data.attendance === 'yes' && result.data.qrToken){
+        var url = 'confirmation.html?token=' + encodeURIComponent(result.data.qrToken)
+                 + '&name=' + encodeURIComponent(fullName.value.trim());
+        window.location.href = url;
+        return;
+      }
+      form.classList.add('hidden');
+      successPanel.classList.add('show');
+    })
+    .catch(function(err){
+      submitError.textContent = err.message || 'We couldn\'t reach the server. Please check your connection and try again.';
+      submitError.classList.add('show');
+      submitBtn.disabled = false;
+      submitBtn.textContent = '♡ Submit RSVP';
+      submitError.scrollIntoView({ behavior:'smooth', block:'center' });
+    });
+  });
+
+  function toggleFieldError(input, hasError){
+    var err = form.querySelector('[data-error-for="' + input.id + '"]');
+    if(err) err.classList.toggle('show', hasError);
+  }
+})();
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

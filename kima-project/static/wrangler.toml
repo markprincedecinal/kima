@@ -1,0 +1,8 @@
+name = "gwyneth-debut-rsvp"
+compatibility_date = "2026-08-30"
+pages_build_output_dir = "."
+
+[[d1_databases]]
+binding = "DB"                          # accessed in Functions as env.DB
+database_name = "debut_rsvp_db"
+database_id = "REPLACE_WITH_YOUR_D1_DATABASE_ID"
